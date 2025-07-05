@@ -1,3 +1,23 @@
+CREATE TABLE Produto (
+    id_produto INT PRIMARY KEY IDENTITY,
+    nome_produto VARCHAR(100)
+);
+
+CREATE TABLE Produto_Categoria (
+    id_produto INT,
+    id_categoria INT,
+    categoria VARCHAR(100),
+    CONSTRAINT fk_id_pc FOREIGN KEY (id_produto)
+    REFERENCES Produto(id_produto)
+);
+
+CREATE TABLE Produto_Estoque (
+    id_produto INT,
+    quantidade INT,
+    CONSTRAINT fk_id_pe FOREIGN KEY (id_produto)
+    REFERENCES Produto(id_produto)
+)
+
 -- QUERY 1
 SELECT P.nome_produto, PC.categoria, PE.quantidade
   FROM Produto P

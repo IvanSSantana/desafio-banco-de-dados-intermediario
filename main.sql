@@ -1,3 +1,4 @@
+-- Estruturando as tabelas
 CREATE TABLE Produto (
     id_produto INT PRIMARY KEY IDENTITY,
     nome_produto VARCHAR(100)
@@ -9,14 +10,26 @@ CREATE TABLE Produto_Categoria (
     categoria VARCHAR(100),
     CONSTRAINT fk_id_pc FOREIGN KEY (id_produto)
     REFERENCES Produto(id_produto)
+    ON DELETE CASCADE -- Ao deletar na tabela pai, aqui também deleta
 );
 
 CREATE TABLE Produto_Estoque (
     id_produto INT,
-    quantidade INT,
-    CONSTRAINT fk_id_pe FOREIGN KEY (id_produto)
-    REFERENCES Produto(id_produto)
-)
+    quantidade INT
+    -- Removi a foreign key para permitir produtos fora linha, mas no estoque
+);
+
+-- Inserindo valores não desejados na query 2
+INSERT INTO Produto(nome_produto) VALUES ('Máquina de datilografia 5500x');
+INSERT INTO Produto_Categoria(id_produto, id_categoria, categoria)
+VALUES (1, 1, 'Eletrônicos')
+INSERT INTO Produto_Estoque(id_produto, quantidade) VALUES (1, 24)
+
+-- Inserindo valores requisitados na query 2
+INSERT INTO Produto(nome_produto) VALUES ('Camiseta Vulcânica');
+INSERT INTO Produto_Categoria(id_produto, id_categoria, categoria)
+VALUES (2, 2, 'Roupas')
+INSERT INTO Produto_Estoque(id_produto, quantidade) VALUES (2, 100)
 
 -- QUERY 1
 SELECT P.nome_produto, PC.categoria, PE.quantidade
